@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Validar DNI</title>
+    </head>
+    <body>
+        <h1>Validar DNI</h1>
+
+        <form id="formulario">
+            <p>Escriba aquí su DNI (el formato debe ser 8 dígitos y una letra, separado por guión):</p>
+            <p><input type="text" name="dni" placeholder="DNI" pattern="[0-9]{8}-[A-Za-z]{1}" id="dni"></p>
+            <h3 id="resultado"></h3>
+            <input type="submit" value="Validar DNI">  
+        </form>
+
+        <script>
+            let formulario = document.getElementById("formulario");
+            let dni = document.getElementById("dni");
+            let resultado = document.getElementById("resultado");
+
+            formulario.onsubmit = function() {
+                fetch('http://localhost:3000/validar?dni=' + dni.value)
+                .then(response => response.json())
+                .then(data => resultado.textContent = data["resultado"]);
+                return false;
+            };
+        </script>
+    </body>
+</html>
